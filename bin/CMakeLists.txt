@@ -1,0 +1,2 @@
+add_executable(realtime_asr_demo realtime_asr_demo.cc)
+target_link_libraries(realtime_asr_demo PUBLIC asr_grpc)
