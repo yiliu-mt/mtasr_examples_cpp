@@ -9,10 +9,11 @@ using grpc::Status;
 using asr::v1::Request;
 using asr::v1::Response;
 
-GrpcClient::GrpcClient(const std::string& host, int port, int nbest,
-                       bool continuous_decoding, const std::string& req_id)
+GrpcClient::GrpcClient(const std::string& host, int port, const std::string& token,
+                       int nbest, bool continuous_decoding, const std::string& req_id)
     : host_(host),
       port_(port),
+      token_(token),
       req_id_(req_id),
       nbest_(nbest),
       continuous_decoding_(continuous_decoding) {
@@ -26,6 +27,9 @@ void GrpcClient::Connect() {
                                  grpc::InsecureChannelCredentials());
   stub_ = ASR::NewStub(channel_);
   context_ = std::make_shared<ClientContext>();
+  if (token_.length() > 0) {
+    context_->AddMetadata("authorization", token_);
+  }
   if (continuous_decoding_)
     stream_ = stub_->RealTimeSpeechRecognition(context_.get());
   else
@@ -36,14 +40,20 @@ void GrpcClient::Connect() {
   response_ = std::make_shared<Response>();
   request_->mutable_decode_config()->set_req_id(req_id_);
   request_->mutable_decode_config()->set_nbest(nbest_);
-  stream_->Write(*request_);
+  bool ret = stream_->Write(*request_);
+  if (!ret) {
+    LOG(INFO) << "Recognize rpc write failed.";
+  }
 }
 
 void GrpcClient::SendBinaryData(const void* data, size_t size) {
   //send binary data
   const int16_t* pdata = reinterpret_cast<const int16_t*>(data);
   request_->set_audio_data(pdata, size);
-  stream_->Write(*request_);
+  bool ret = stream_->Write(*request_);
+  if (!ret) {
+    LOG(INFO) << "Recognize rpc write failed.";
+  }
 }
 
 void GrpcClient::ReadLoopFunc() {
@@ -84,7 +94,7 @@ void GrpcClient::Join() {
   t_->join();
   Status status = stream_->Finish();
   if (!status.ok()) {
-    LOG(INFO) << "Recognize rpc failed.";
+    LOG(INFO) << "Recognize rpc failed: " << status.error_message();
   }
 }
 }  // namespace mtasr

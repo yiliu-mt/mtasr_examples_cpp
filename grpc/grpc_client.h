@@ -25,8 +25,8 @@ using asr::v1::Response;
 
 class GrpcClient {
  public:
-  GrpcClient(const std::string& host, int port, int nbest=1,
-             bool continuous_decoding=true, const std::string& req_id="test");
+  GrpcClient(const std::string& host, int port, const std::string& token="",
+             int nbest=1, bool continuous_decoding=true, const std::string& req_id="test");
   void SendBinaryData(const void* data, size_t size);
   void ReadLoopFunc();
   void Join();
@@ -36,6 +36,7 @@ class GrpcClient {
   void Connect();
   std::string host_;
   int port_;
+  std::string token_;
   std::shared_ptr<Channel> channel_{nullptr};
   std::unique_ptr<ASR::Stub> stub_{nullptr};
   std::shared_ptr<ClientContext> context_{nullptr};

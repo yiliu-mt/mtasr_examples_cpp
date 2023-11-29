@@ -5,12 +5,14 @@
 
 DEFINE_string(hostname, "127.0.0.1", "hostname of websocket server");
 DEFINE_int32(port, 10086, "port of websocket server");
+DEFINE_string(token, "", "token used for authorization");
 DEFINE_string(wav_path, "", "test wav file path");
 
 void decode(std::string &wav) {
   mtasr::GrpcClient client(
     FLAGS_hostname,
-    FLAGS_port
+    FLAGS_port,
+    FLAGS_token
   );
 
   // Read wav
