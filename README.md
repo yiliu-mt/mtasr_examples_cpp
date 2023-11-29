@@ -58,3 +58,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/grpc)
 # )
 # FetchContent_MakeAvailable(gRPC)
 ```
+
+### How to use the libraries in the image
+
+The third-party libraries are downloaded in `/workspace/mtasr_examples_cpp/fc_base`. You can copy this folder to your own local directory to avoid downloading during building. You should also need to modify `cmake/grpc.cmake` to make it work.
