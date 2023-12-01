@@ -5,8 +5,8 @@ add_library(utils STATIC
 
 if(NOT ANDROID)
   if(MSVC)
-    target_link_libraries(utils PUBLIC fst)
+    target_link_libraries(utils)
   else()
-    target_link_libraries(utils PUBLIC fst dl)
+    target_link_libraries(utils PUBLIC dl)
   endif()
 endif()

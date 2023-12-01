@@ -23,20 +23,14 @@ else()
 endif()
 
 # Include all dependency
-include(openfst)
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 # Build all libraries
 add_subdirectory(utils)
-if(NOT MSVC)
-  add_dependencies(utils openfst)
-endif()
-
 add_subdirectory(frontend)
 
-include(boost)
 include(grpc)
 add_subdirectory(grpc)
 

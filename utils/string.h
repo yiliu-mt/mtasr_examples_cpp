@@ -7,8 +7,6 @@
 #include <string>
 #include <vector>
 
-#include "fst/symbol-table.h"
-
 namespace mtasr {
 
 const char WHITESPACE[] = " \n\r\t\f\v";
@@ -38,13 +36,6 @@ bool CheckEnglishWord(const std::string& word);
 
 std::string JoinString(const std::string& c,
                        const std::vector<std::string>& strs);
-
-// Split the UTF-8 string into words by symbol table.
-// Return whether not contains oov.
-bool SplitUTF8StringToWords(
-    const std::string& str,
-    const std::shared_ptr<fst::SymbolTable>& symbol_table,
-    std::vector<std::string>* words);
 
 // Replace ▁ with space, then remove head, tail and consecutive space.
 std::string ProcessBlank(const std::string& str, bool lowercase);
