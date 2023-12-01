@@ -5,8 +5,8 @@ add_library(utils STATIC
 
 if(NOT ANDROID)
   if(MSVC)
-    target_link_libraries(utils)
+    target_link_libraries(utils PUBLIC glog gflags_nothreads_static)
   else()
-    target_link_libraries(utils PUBLIC dl)
+    target_link_libraries(utils PUBLIC glog gflags_nothreads_static dl)
   endif()
 endif()
