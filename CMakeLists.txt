@@ -1,5 +1,11 @@
 cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 
+if(MSVC)
+  if (POLICY CMP0048)
+    cmake_policy(SET CMP0048 NEW)
+  endif (POLICY CMP0048)
+endif()
+
 project(mtasr VERSION 0.1)
 
 option(GRPC "whether to build with gRPC" ON)
@@ -33,7 +39,11 @@ include_directories(
 add_subdirectory(utils)
 add_subdirectory(frontend)
 
-include(grpc)
+if(MSVC)
+  find_package(gRPC CONFIG REQUIRED)
+else()
+  include(grpc)
+endif()
 add_subdirectory(grpc)
 
 # Build all bins
