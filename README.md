@@ -1,5 +1,21 @@
 # MT ASR C++ client
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [Linux](#linux)
+  - [Requirements](#requirements)
+  - [Compile](#compile)
+  - [Run](#run)
+  - [Docker](#docker)
+  - [Dependencies](#dependencies)
+- [Windows](#windows)
+  - [Install gRPC using vcpkg](#install-grpc-using-vcpkg)
+  - [Generate configuration using CMake GUI](#generate-configuration-using-cmake-gui)
+  - [Build using Visual Studio](#build-using-visual-studio)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Linux
 
 ### Requirements
