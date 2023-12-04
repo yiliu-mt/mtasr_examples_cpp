@@ -109,6 +109,7 @@ In Windows, we strongly recommand you to install vcpkg. [Vcpkg](https://github.c
     ```
     vcpkg install grpc:x64-windows
     vcpkg install protobuf protobuf:x64-windows
+    vcpkg install protobuf[zlib] protobuf[zlib]:x64-windows
     vcpkg integrate install
     ```
 
