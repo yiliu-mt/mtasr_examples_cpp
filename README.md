@@ -13,7 +13,7 @@ This branch is created for building the binary under:
 
 ## Build dependencies
 
-This binary depends on three libraries. Build them independently.
+This binary depends on three libraries. Build them independently. Check `lib/README.md` to see the download links.
 
 ### gflags
 
