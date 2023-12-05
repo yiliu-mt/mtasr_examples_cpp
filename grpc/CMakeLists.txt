@@ -5,15 +5,14 @@ add_custom_command(
           ${PROTO_DIR}/asr.pb.h
           ${PROTO_DIR}/asr.grpc.pb.cc
           ${PROTO_DIR}/asr.grpc.pb.h
-  COMMAND ${protobuf_BINARY_DIR}/protoc
+  COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/../lib/grpc/third_party/protobuf/src/protoc
   ARGS --grpc_out "${PROTO_DIR}"
     --cpp_out "${PROTO_DIR}"
     -I "${PROTO_DIR}"
-    --plugin=protoc-gen-grpc=${grpc_BINARY_DIR}/grpc_cpp_plugin
+    --plugin=protoc-gen-grpc=${CMAKE_CURRENT_SOURCE_DIR}/../lib/grpc/bins/opt/grpc_cpp_plugin
     asr.proto)
 
 # grpc_client
-link_directories(${protobuf_BINARY_DIR}/lib)
 add_library(asr_grpc STATIC
   grpc_client.cc
   asr.pb.cc
