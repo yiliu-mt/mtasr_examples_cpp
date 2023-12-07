@@ -104,7 +104,7 @@ In Windows, we strongly recommand you to install vcpkg. [Vcpkg](https://github.c
 
 2. Install grpc
 
-    Run the following commands in PowerShell:
+    Run the following commands in PowerShell (Assuming you are using Windows x64):
 
     ```
     vcpkg install grpc:x64-windows
@@ -113,7 +113,15 @@ In Windows, we strongly recommand you to install vcpkg. [Vcpkg](https://github.c
     vcpkg integrate install
     ```
 
-    After installing, you can build projects with grpc by adding `-DCMAKE_TOOLCHAIN_FILE=<vcpkg_install_path>/scripts/buildsystems/vcpkg.cmake` when build with cmake. We will use this later.
+    After installing, you can build projects with grpc by adding `-DCMAKE_TOOLCHAIN_FILE=<vcpkg_install_path>\scripts/buildsystems/vcpkg.cmake` when build with cmake. We will use this later.
+
+### Compile the proto
+
+The proto need to be compiled to cpp files before building the client binaries. Run the following command in `<mtasr_examples_cpp>` directory using PowerShell:
+
+```
+<vcpkg_install_path>\packages\protobuf_x64-windows\tools\protobuf\protoc.exe --grpc_out . --cpp_out . -I . --plugin=protoc-gen-grpc=<vcpkg_install_path>\packages\grpc_x64-windows\tools\grpc\grpc_cpp_plugin.exe grpc\asr.proto
+```
 
 ### Generate configuration using CMake GUI
 
@@ -162,5 +170,5 @@ $env:GLOG_v=2
     --hostname URL \
     --port PORT \
     --token TOKEN \
-    --wav_path $your_test_wav_path 2>&1
+    --wav_path $your_test_wav_path
 ```
