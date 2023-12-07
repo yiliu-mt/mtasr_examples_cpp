@@ -10,6 +10,12 @@ This branch is created for building the binary under:
 
 3. gcc 4.8.5
 
+You also have to install some basic libraries to make the binary. In centos 7, you can install using yum:
+
+```
+yum install make automake gcc gcc-c++ kernel-devel which libtool
+```
+
 
 ## Build dependencies
 
