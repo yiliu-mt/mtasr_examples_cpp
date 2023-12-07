@@ -170,5 +170,5 @@ $env:GLOG_v=2
     --hostname URL \
     --port PORT \
     --token TOKEN \
-    --wav_path $your_test_wav_path 2>&1
+    --wav_path $your_test_wav_path
 ```
