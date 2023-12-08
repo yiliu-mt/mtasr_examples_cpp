@@ -54,6 +54,8 @@ mkdir build &&  cd build/  &&  cmake .. && cmake --build .
 
 ## Run
 
+> If you don't have the token, do not need to specify `--token TOKEN` in the command line.
+
 ``` sh
 export GLOG_logtostderr=1
 export GLOG_v=2
