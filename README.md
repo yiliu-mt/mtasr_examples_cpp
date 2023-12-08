@@ -38,7 +38,7 @@ Input wav only support 16kHz wav format files.
 
 You should also specify the URL and port of the ASR server.
 
-If a authorization token is given, you should specify the TOKEN as well.
+If a authorization token is given, you should specify the TOKEN as well. If you don't have the token, do not specify `--token TOKEN` in the command line.
 
 ``` sh
 export GLOG_logtostderr=1
