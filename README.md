@@ -22,9 +22,13 @@
 
 1. CMake >= 3.14
 
-2. gcc >= 9
+2. gcc >= 9; <11
 
 3. glibc >= 2.31
+
+We recommend you to use **Ubuntu 20.04** which meets all the requirements. The constraint mainly comes from gRPC. This gRPC version is supported well in Ubuntu 20.04. 
+
+If a newer gcc is used, you need to upgrade the gRPC version manually. 
 
 ### Compile
 
