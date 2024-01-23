@@ -18,7 +18,7 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/lib/gflags-2.2.2-cmake-2.8/build/include
   ${CMAKE_CURRENT_SOURCE_DIR}/lib/glog-0.4.0-cmake-2.8/build
   ${CMAKE_CURRENT_SOURCE_DIR}/lib/glog-0.4.0-cmake-2.8/src
-  ${CMAKE_CURRENT_SOURCE_DIR}/lib/boost_1_75_0/boost
+  ${CMAKE_CURRENT_SOURCE_DIR}/lib/boost_1_75_0
 )
 
 link_directories(
