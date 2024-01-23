@@ -124,7 +124,6 @@ std::string ProcessBlank(const std::string& str, bool lowercase) {
       result.pop_back();
     }
     // NOTE: convert string to wstring
-    //       see issue 745: https://github.com/wenet-e2e/wenet/issues/745
     std::locale loc("");
     std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
     std::wstring wsresult = converter.from_bytes(result);
