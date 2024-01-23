@@ -1,7 +1,6 @@
 #ifndef UTILS_STRING_H_
 #define UTILS_STRING_H_
 
-#include <codecvt>
 #include <locale>
 #include <memory>
 #include <string>
