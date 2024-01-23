@@ -103,38 +103,6 @@ std::string JoinString(const std::string& c,
   return result;
 }
 
-std::string ProcessBlank(const std::string& str, bool lowercase) {
-  std::string result;
-  if (!str.empty()) {
-    std::vector<std::string> chars;
-    SplitUTF8StringToChars(Trim(str), &chars);
-
-    for (std::string& ch : chars) {
-      if (ch != kSpaceSymbol) {
-        result.append(ch);
-      } else {
-        // Ignore consecutive space or located in head
-        if (!result.empty() && result.back() != ' ') {
-          result.push_back(' ');
-        }
-      }
-    }
-    // Ignore tailing space
-    if (!result.empty() && result.back() == ' ') {
-      result.pop_back();
-    }
-    // NOTE: convert string to wstring
-    std::locale loc("");
-    std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
-    std::wstring wsresult = converter.from_bytes(result);
-    for (auto& c : wsresult) {
-      c = lowercase ? tolower(c, loc) : toupper(c, loc);
-    }
-    result = converter.to_bytes(wsresult);
-  }
-  return result;
-}
-
 std::string Ltrim(const std::string& str) {
   size_t start = str.find_first_not_of(WHITESPACE);
   return (start == std::string::npos) ? "" : str.substr(start);
