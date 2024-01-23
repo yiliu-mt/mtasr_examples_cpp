@@ -1,43 +1,34 @@
-cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
+cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 
-if(MSVC)
-  if (POLICY CMP0048)
-    cmake_policy(SET CMP0048 NEW)
-  endif (POLICY CMP0048)
-endif()
-
-project(mtasr VERSION 1.0)
+project(mtasr)
 
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 
-include(FetchContent)
-include(ExternalProject)
-set(FETCHCONTENT_QUIET OFF)
-get_filename_component(fc_base "fc_base" REALPATH BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
-set(FETCHCONTENT_BASE_DIR ${fc_base})
-
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
-
 if(NOT MSVC)
   # Keep the same with openfst, -fPIC or -fpic
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -pthread -fPIC")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread -fPIC")
 else()
   set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
   add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 endif()
 
 # Include all dependency
-include(glog)
-include(gflags)
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/lib/gflags-2.2.2-cmake-2.8/build/include
+  ${CMAKE_CURRENT_SOURCE_DIR}/lib/glog-0.4.0-cmake-2.8/build
+  ${CMAKE_CURRENT_SOURCE_DIR}/lib/glog-0.4.0-cmake-2.8/src
+  ${CMAKE_CURRENT_SOURCE_DIR}/lib/boost_1_75_0/boost
+)
+
+link_directories(
+  ${CMAKE_CURRENT_SOURCE_DIR}/lib/gflags-2.2.2-cmake-2.8/build/lib
+  ${CMAKE_CURRENT_SOURCE_DIR}/lib/glog-0.4.0-cmake-2.8/build
 )
 
 # Build all libraries
 add_subdirectory(utils)
 add_subdirectory(frontend)
-
-include(boost)
 add_subdirectory(websocket)
 
 # Build all bins
