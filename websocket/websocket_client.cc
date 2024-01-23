@@ -73,6 +73,14 @@ void WsClient::Connect() {
   } else {
     auto ep = asio::connect(ws_.next_layer(), results);
     std::string host = host_ + ":" + std::to_string(ep.port());
+    if (!token_.empty()) {
+      std::string token = token_;
+      ws_.set_option(websocket::stream_base::decorator(
+        [token](websocket::request_type& req){
+            req.set(http::field::authorization, token);
+        })
+      );
+    }
     ws_.handshake(host_, path_);
   }
 }
@@ -160,7 +168,6 @@ void WsClient::ReadLoopFunc() {
 void WsClient::Join() { t_->join(); }
 
 void WsClient::SendStartSignal() {
-  LOG(INFO) << nbest_;
   json::value start_tag = {
     {"header", {
         {"appid", token_},
