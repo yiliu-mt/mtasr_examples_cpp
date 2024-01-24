@@ -31,6 +31,10 @@ include(glog)
 include(gflags)
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}
+  ${OPENSSL_INCLUDE_DIR}
+)
+link_directories(
+    ${OPENSSL_LIBRARIES}
 )
 
 # Build all libraries
