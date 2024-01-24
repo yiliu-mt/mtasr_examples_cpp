@@ -1,0 +1,6 @@
+add_library(websocket STATIC websocket_client.cc)
+if (NOT MSVC)
+    target_link_libraries(websocket PUBLIC utils ssl crypto)
+else()
+    target_link_libraries(websocket PUBLIC utils libssl libcrypto)
+endif()

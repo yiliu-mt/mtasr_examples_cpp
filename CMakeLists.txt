@@ -6,9 +6,7 @@ if(MSVC)
   endif (POLICY CMP0048)
 endif()
 
-project(mtasr VERSION 0.1)
-
-option(GRPC "whether to build with gRPC" ON)
+project(mtasr VERSION 1.0)
 
 set(CMAKE_VERBOSE_MAKEFILE OFF)
 
@@ -33,18 +31,18 @@ include(glog)
 include(gflags)
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}
+  ${OPENSSL_INCLUDE_DIR}
+)
+link_directories(
+    ${OPENSSL_LIBRARIES}
 )
 
 # Build all libraries
 add_subdirectory(utils)
 add_subdirectory(frontend)
 
-if(MSVC)
-  find_package(gRPC CONFIG REQUIRED)
-else()
-  include(grpc)
-endif()
-add_subdirectory(grpc)
+include(boost)
+add_subdirectory(websocket)
 
 # Build all bins
 add_subdirectory(bin)

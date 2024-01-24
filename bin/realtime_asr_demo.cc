@@ -1,19 +1,58 @@
 #include "frontend/wav.h"
 #include "utils/flags.h"
 #include "utils/string.h"
-#include "grpc/grpc_client.h"
+#include "websocket/websocket_client.h"
 
-DEFINE_string(hostname, "127.0.0.1", "hostname of websocket server");
-DEFINE_int32(port, 10086, "port of websocket server");
+// Server
+DEFINE_string(url, "wss://api.mthreads.com/api/v1/asr", "url for the websocket server");
 DEFINE_string(token, "", "token used for authorization");
 DEFINE_string(wav_path, "", "test wav file path");
+// Configuration
+DEFINE_string(domain, "general", "domain");
+DEFINE_string(language, "cn", "language");
+DEFINE_string(format, "pcm", "audio format");
+DEFINE_string(vocabulary_id, "", "vocabulary id");
+DEFINE_string(lm_id, "", "language model id");
+DEFINE_bool(enable_punctuation, true, "enable punctuation");
+DEFINE_bool(enable_itn, true, "enable itn");
+DEFINE_bool(remove_disfluency, false, "remove disfluency");
+DEFINE_bool(enable_speaker_info, false, "enable speaker information");
+DEFINE_int32(nbest, 1, "nbest");
+DEFINE_bool(show_confidence, false, "show confidence");
+DEFINE_bool(show_words, true, "show words");
+DEFINE_bool(show_intermediate_result, true, "shwo intermediate result");
+DEFINE_bool(enable_semantic_sentence_detection, false, "enable semantic sentence detection");
+DEFINE_string(special_word_filter, "", "special word filter");
+// End configuration
+
+std::mutex g_mutex;
+
 
 void decode(std::string &wav) {
-  mtasr::GrpcClient client(
-    FLAGS_hostname,
-    FLAGS_port,
+  mtasr::WsClient client(
+    FLAGS_url,
     FLAGS_token
   );
+  client.set_configuration(
+    FLAGS_domain,
+    FLAGS_language,
+    FLAGS_format,
+    FLAGS_vocabulary_id,
+    FLAGS_lm_id,
+    FLAGS_enable_punctuation,
+    FLAGS_enable_itn,
+    FLAGS_remove_disfluency,
+    FLAGS_enable_speaker_info,
+    FLAGS_nbest,
+    FLAGS_show_confidence,
+    FLAGS_show_words,
+    FLAGS_show_intermediate_result,
+    FLAGS_enable_semantic_sentence_detection,
+    FLAGS_special_word_filter
+  );
+
+  // Send begin signal
+  client.SendStartSignal();
 
   // Read wav
   mtasr::WavReader wav_reader(wav);
@@ -49,13 +88,16 @@ void decode(std::string &wav) {
     // std::this_thread::sleep_for(
     //     std::chrono::milliseconds(static_cast<int>(interval * 1000)));
   }
+
+  // Send end signal
+  client.SendEndSignal();
   client.Join();
   return;
 }
-
 
 int main(int argc, char* argv[]) {
   gflags::ParseCommandLineFlags(&argc, &argv, false);
   google::InitGoogleLogging(argv[0]);
   decode(FLAGS_wav_path);
 }
+
