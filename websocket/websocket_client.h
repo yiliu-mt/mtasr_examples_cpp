@@ -26,7 +26,7 @@ using tcp = boost::asio::ip::tcp;
 
 class WsClient {
  public:
-  WsClient(const std::string& url, const std::string& token);
+  WsClient(const std::string &mode, const std::string& url, const std::string& token);
 
 
   void set_configuration(

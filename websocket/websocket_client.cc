@@ -40,14 +40,20 @@ void parse_url(const std::string& url, std::string& scheme, std::string& host, s
         target = "/";
 }
 
-WsClient::WsClient(const std::string& url, const std::string& token)
-    : token_(token) {
+WsClient::WsClient(const std::string& mode, const std::string& url, const std::string& token) {
   parse_url(url, scheme_, host_, port_, path_);
   if (scheme_ != "ws" && scheme_ != "wss") {
     throw std::runtime_error("The websocket scheme must be ws or wss");
   }
   is_secure_ = (scheme_ == "wss");
   LOG(INFO) << "Scheme: " << scheme_ << ", host: " << host_ << ", path: " << path_ << ", port: " << port_;
+
+  if (mode == "cloud") {
+    token_ = token;
+  } else if (mode == "local") {
+    token_ = "";
+    path_ += "?token=" + token;
+  }
 
   Connect();
   t_.reset(new std::thread(&WsClient::ReadLoopFunc, this));

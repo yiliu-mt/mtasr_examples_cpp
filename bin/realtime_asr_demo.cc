@@ -4,32 +4,32 @@
 #include "websocket/websocket_client.h"
 
 // Server
+DEFINE_string(mode, "cloud", "the authorization mode");
 DEFINE_string(url, "wss://api.mthreads.com/api/v1/asr", "url for the websocket server");
 DEFINE_string(token, "", "token used for authorization");
 DEFINE_string(wav_path, "", "test wav file path");
 // Configuration
+DEFINE_bool(enable_punctuation, true, "enable punctuation");
+DEFINE_bool(enable_itn, true, "enable itn");
+DEFINE_string(vocabulary_id, "", "vocabulary id");
+DEFINE_bool(show_intermediate_result, true, "shwo intermediate result");
+DEFINE_bool(show_words, true, "show words");
+DEFINE_int32(nbest, 1, "nbest");
 DEFINE_string(domain, "general", "domain");
 DEFINE_string(language, "cn", "language");
 DEFINE_string(format, "pcm", "audio format");
-DEFINE_string(vocabulary_id, "", "vocabulary id");
 DEFINE_string(lm_id, "", "language model id");
-DEFINE_bool(enable_punctuation, true, "enable punctuation");
-DEFINE_bool(enable_itn, true, "enable itn");
 DEFINE_bool(remove_disfluency, false, "remove disfluency");
 DEFINE_bool(enable_speaker_info, false, "enable speaker information");
-DEFINE_int32(nbest, 1, "nbest");
 DEFINE_bool(show_confidence, false, "show confidence");
-DEFINE_bool(show_words, true, "show words");
-DEFINE_bool(show_intermediate_result, true, "shwo intermediate result");
 DEFINE_bool(enable_semantic_sentence_detection, false, "enable semantic sentence detection");
 DEFINE_string(special_word_filter, "", "special word filter");
 // End configuration
-
 std::mutex g_mutex;
-
 
 void decode(std::string &wav) {
   mtasr::WsClient client(
+    FLAGS_mode,
     FLAGS_url,
     FLAGS_token
   );

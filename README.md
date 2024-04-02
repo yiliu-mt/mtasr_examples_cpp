@@ -64,23 +64,52 @@ docker run --rm -it yiliumt/mtasr_client:v1.2 bash
 
 The input supports 16kHz 16bit mono wav files. Specify the URL and token
 for authorization. For configurations, refer to
-[bin/realtime\_asr\_demo.cc](bin/realtime_asr_demo.cc), or use:
+[bin/realtime\_asr\_demo.cc](bin/realtime_asr_demo.cc), or use this to view all parameters.
 
 ``` sh
 ./build/bin/realtime_asr_demo --help
 ```
 
-to view all parameters. To run the demo:
+The authorization methods are different for the cloud service and the local AI Box. **You should always specify the mode you are using.** The default is the **cloud** mode. To run the demo:
 
 ``` sh
 export GLOG_logtostderr=1
 export GLOG_v=2
+
+# For the cloud service
 ./build/bin/realtime_asr_demo \
+  --mode cloud \
   --url wss://api.mthreads.com/api/v1/asr \
   --token $your_token \
   --wav_path demo.wav \
   --enable_punctuation true \
   --enable_itn true
+
+# For local AI Box
+./build/bin/realtime_asr_demo \
+  --mode local \
+  --url wss://127.0.0.1/api/v1/asr \
+  --token $your_token \
+  --wav_path demo.wav \
+  --enable_punctuation true \
+  --enable_itn true
+```
+
+### session-level hotword
+
+Please refer to [this](https://github.com/yiliu-mt/mtasr_examples/tree/main/realtime_streaming_asr) to see how to add, remove, modify and list hotwords.
+
+Once you have added a hotword and had a \<vocabulary_id\>, you can use the session-level hotword by giving the \<vocabulary_id\>:
+
+``` sh
+./build/bin/realtime_asr_demo \
+  --mode local \
+  --url wss://127.0.0.1/api/v1/asr \
+  --token $your_token \
+  --wav_path hotword/hotword_demo.wav \
+  --enable_punctuation true \
+  --enable_itn true \
+  --vocabulary_id $vocabulary_id
 ```
 
 Windows
@@ -172,3 +201,7 @@ $env:GLOG_v=2
   --enable_punctuation true \
   --enable_itn true
 ```
+
+### hotword
+
+Same as Linux.
