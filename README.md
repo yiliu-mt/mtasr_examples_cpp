@@ -53,10 +53,10 @@ URL  /home/user/gflags-2.2.2.zip
 
 #### Docker
 
-For convenience, use the docker image: `yiliumt/mtasr_client:v1.2`
+For convenience, use the docker image: `yiliumt/mtasr_client:v1.3`
 
 ``` sh
-docker run --rm -it yiliumt/mtasr_client:v1.2 bash
+docker run --rm -it yiliumt/mtasr_client:v1.3 bash
 # Then you can run demos
 ```
 
