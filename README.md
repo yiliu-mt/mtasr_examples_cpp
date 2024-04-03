@@ -95,11 +95,11 @@ export GLOG_v=2
   --enable_itn true
 ```
 
-### session-level hotword
+### Hotwords
 
 Please refer to [this](https://github.com/yiliu-mt/mtasr_examples/tree/main/realtime_streaming_asr) to see how to add, remove, modify and list hotwords.
 
-Once you have added a hotword and had a \<vocabulary_id\>, you can use the session-level hotword by giving the \<vocabulary_id\>:
+Once you have added a hotword and had a \<vocabulary_id\>, you can use the hotword by giving the \<vocabulary_id\>:
 
 ``` sh
 ./build/bin/realtime_asr_demo \
